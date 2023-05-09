@@ -1,2 +1,2 @@
 # ojichat-aigc
-Ojichat now with AI!
+Ojichat powered by OpenAI, now ojisan has become knowledgeable!
