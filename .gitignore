@@ -14,6 +14,9 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Sensitive or high-churn files:
+config.json
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
