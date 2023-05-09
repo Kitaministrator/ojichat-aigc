@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"net/http"
+	"net/url"
 	"os"
 	"strconv"
 
@@ -15,6 +17,7 @@ type openaiConfig struct {
 	BaseURL            string `json:"baseurl"`
 	OrgID              string `json:"orgid"`
 	EmptyMessagesLimit uint   `json:"emptymessageslimit"`
+	ProxyURL           string `json:"proxyurl"`
 }
 
 var openaiCfg openaiConfig
@@ -65,7 +68,7 @@ func loadConfigFromEnv() {
 	} else {
 		openaiCfg.EmptyMessagesLimit = uint(limit)
 	}
-
+	openaiCfg.ProxyURL = os.Getenv("OPENAI_PROXY_URL")
 	setValue()
 }
 
@@ -84,6 +87,21 @@ func setValue() {
 	// Only update EmptyMessagesLimit if it's not zero
 	if openaiCfg.EmptyMessagesLimit != 0 {
 		ClientCfg.EmptyMessagesLimit = openaiCfg.EmptyMessagesLimit
+	}
+
+	// Set up the proxy if the proxy URL is provided
+	if openaiCfg.ProxyURL != "" {
+		proxyUrl, err := url.Parse(openaiCfg.ProxyURL)
+		if err != nil {
+			log.Printf("Failed to parse proxy URL: %s. Skipping proxy setup.\n", err)
+		} else {
+			transport := &http.Transport{
+				Proxy: http.ProxyURL(proxyUrl),
+			}
+			ClientCfg.HTTPClient = &http.Client{
+				Transport: transport,
+			}
+		}
 	}
 }
 

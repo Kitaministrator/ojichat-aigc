@@ -6,11 +6,9 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
-	"net/url"
-	"time"
 
 	openai "github.com/sashabaranov/go-openai"
+	// ojichat "github.com/greymd/ojichat/generator"
 )
 
 func main() {
@@ -20,17 +18,8 @@ func main() {
 		panic(err)
 	}
 	log.Printf("Finished loading custom configs.")
+
 	config := ClientCfg
-	proxyUrl, err := url.Parse("http://localhost:7890")
-	if err != nil {
-		panic(err)
-	}
-	transport := &http.Transport{
-		Proxy: http.ProxyURL(proxyUrl),
-	}
-	config.HTTPClient = &http.Client{
-		Transport: transport,
-	}
 	c := openai.NewClientWithConfig(config)
 	ctx := context.Background()
 
@@ -40,7 +29,7 @@ func main() {
 		Messages: []openai.ChatCompletionMessage{
 			{
 				Role:    openai.ChatMessageRoleUser,
-				Content: "Who is Isaac Newton?",
+				Content: "Who is Hideo Kojima?",
 			},
 		},
 		Stream: true,
@@ -65,7 +54,6 @@ func main() {
 			return
 		}
 
-		// fmt.Printf(response.Choices[0].Delta.Content)
-		fmt.Println("message：", time.Now(), response.Choices[0].Delta.Content)
+		fmt.Printf(response.Choices[0].Delta.Content)
 	}
 }
