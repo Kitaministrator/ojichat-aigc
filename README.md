@@ -23,6 +23,7 @@ Ojichat powered by OpenAI, now ojisan has become knowledgeable!
 - maxtokens: 簡単に言うとGPTの処理量というもの、ユーザーの輸入とモデルの max_tokens はユーザーの入力(prompt) およびモデルの出力(completion) の文字の総量を制限します。
         日本語の仮名や漢字のtokensは1.2〜3程度です。
         OpenAIはモデルのタイプと毎回処理したtokensの量で料金を計算する。現時点で（令和5年5月10日）、instruct能力を備えた最も低価格なモデルはGPT-3.5-turboです、1000 tokens（約700文字相当）で0.002 ドールになっています。
+        なお、GPT-3.5-turbo の最大の処理量は2048となります。
         高く設定されているからといって、必ず制限までの長さの回答が生成されるわけではありません。ただし、低く設定すると、モデルの回答が途中で切断される可能性があります。
         本プログラムの prompt + completion は通常600〜700程度です。
         
@@ -33,3 +34,4 @@ Ojichat powered by OpenAI, now ojisan has become knowledgeable!
 - orgid：OpenAIでの組織認証コードです、一般的には不要です。
 - emptymessageslimit：おじさんにもわかんない！
 - proxyurl: プロキシの設定です、インターネットに直接に接続された実行環境では不要です。
+- temperature/topp/frequencypenalty/presencepenalty: モデル関連の設定です、おじさんが面白いかおかしいかに関わるです、詳細は https://platform.openai.com/docs/api-reference/completions/create まで

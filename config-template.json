@@ -1,8 +1,12 @@
 {
-    "authtoken": "sk-mytoken",
-    "maxtokens": 300,
+    "authtoken": "sk-yourapikeyhere",
+    "maxtokens": 1000,
     "baseurl": "",
     "orgid": "",
     "emptymessageslimit": 300,
-    "proxyurl": ""
+    "proxyurl": "",
+    "temperature": 0.7,
+    "topp": 1,
+    "frequencypenalty": 0.0,
+    "presencepenalty": 0.0
 }

@@ -14,7 +14,7 @@ func buildOjisanPrompt(name string, theme string) (string, error) {
 	var ojisanPrompt strings.Builder
 	fmt.Fprintf(&ojisanPrompt, "おじさん構文で「%s」という人物に挨拶して、相手の名前と愛称を付けて", name)
 	if len(strings.Fields(theme)) > 0 {
-		ojisanPrompt.WriteString("、加えて指定の要素を含めて")
+		ojisanPrompt.WriteString("、加えて指定の要素も含めて")
 		ojisanPrompt.WriteString("\n")
 		ojisanPrompt.WriteString("要素：")
 		ojisanPrompt.WriteString(theme)
@@ -22,7 +22,7 @@ func buildOjisanPrompt(name string, theme string) (string, error) {
 	ojisanPrompt.WriteString("\n")
 	ojisanPrompt.WriteString("追加資料として、こちらはおじさん構文の例文：")
 	ojisanPrompt.WriteString("\n")
-	// 追加資料を構築する、三回分なら十分におじさんの方向に行くはず
+	// モデルが特徴を捉えるために、追加の情報を収集してデータを構築する必要があります、三回分なら十分におじさんの方向に行くはず
 	for i := 0; i < 3; i++ {
 		message, err := generateOjisanMessage(name)
 		if err != nil {
@@ -33,25 +33,6 @@ func buildOjisanPrompt(name string, theme string) (string, error) {
 			ojisanPrompt.WriteString("\n")
 		}
 	}
-	// log.Println(ojisanPrompt.String())
-
-	// by now, the prompt would be like this:
-
-	// テーマが入れる場合：
-	// おじさん構文で「（&name）」という人物に挨拶して、加えて以下のテーマを含めて
-	// （&theme）
-	// 追加資料として、こちらはおじさん構文の例文：
-	// なんらかのおじさん発言１
-	// なんらかのおじさん発言２
-	// なんらかのおじさん発言３ (end)
-
-	// テーマが入れない場合：
-	// おじさん構文で「（&name）」という人物に挨拶して
-	// 例文として：
-	// 追加資料として、こちらはおじさん構文の例文：
-	// なんらかのおじさん発言１
-	// なんらかのおじさん発言２
-	// なんらかのおじさん発言３ (end)
 
 	return ojisanPrompt.String(), nil
 }
