@@ -71,7 +71,11 @@ func main() {
 					Content: prompt,
 				},
 			},
-			Stream: true,
+			Temperature:      GptCfg.Temperature,
+			TopP:             GptCfg.TopP,
+			FrequencyPenalty: GptCfg.FrequencyPenalty,
+			PresencePenalty:  GptCfg.PresencePenalty,
+			Stream:           true,
 		}
 		stream, err := c.CreateChatCompletionStream(ctx, req)
 		if err != nil {
