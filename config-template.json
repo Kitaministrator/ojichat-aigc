@@ -1,5 +1,6 @@
 {
     "authtoken": "sk-mytoken",
+    "maxtokens": 300,
     "baseurl": "",
     "orgid": "",
     "emptymessageslimit": 300,

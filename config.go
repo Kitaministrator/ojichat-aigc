@@ -18,10 +18,16 @@ type openaiConfig struct {
 	OrgID              string `json:"orgid"`
 	EmptyMessagesLimit uint   `json:"emptymessageslimit"`
 	ProxyURL           string `json:"proxyurl"`
+	MaxTokens          uint   `json:"maxtokens"`
+}
+
+type gptConfig struct {
+	MaxTokens uint `json:"maxtokens"`
 }
 
 var openaiCfg openaiConfig
 var ClientCfg openai.ClientConfig
+var GptCfg gptConfig
 
 func loadConfig() error {
 	// Try reading local config file first
@@ -59,6 +65,8 @@ func loadConfigFromEnv() {
 
 	// Read config from env
 	openaiCfg.AuthToken = os.Getenv("OPENAI_AUTH_TOKEN")
+
+	openaiCfg.OrgID = os.Getenv("OPENAI_MAX_TOKENS")
 	openaiCfg.BaseURL = os.Getenv("OPENAI_BASE_URL")
 	openaiCfg.OrgID = os.Getenv("OPENAI_ORG_ID")
 	limit, err := strconv.ParseUint(os.Getenv("OPENAI_MTY_MSG_LIM"), 10, 64)
@@ -69,6 +77,13 @@ func loadConfigFromEnv() {
 		openaiCfg.EmptyMessagesLimit = uint(limit)
 	}
 	openaiCfg.ProxyURL = os.Getenv("OPENAI_PROXY_URL")
+	tokens, err := strconv.ParseUint(os.Getenv("OPENAI_MAX_TOKENS"), 10, 64)
+	if err != nil {
+		GptCfg.MaxTokens = 1000
+		log.Printf("Failed to parse OPENAI_MAX_TOKENS: %s. Using default value of %d.\n", err, GptCfg.MaxTokens)
+	} else {
+		GptCfg.MaxTokens = uint(tokens)
+	}
 	setValue()
 }
 
@@ -103,24 +118,14 @@ func setValue() {
 			}
 		}
 	}
-}
 
-/// external file config.json
-/// path: ./config.json
-/// structure:
-/*
-	{
-		"authtoken": "your-token",
-		"baseurl": "your-private-domain-api",
-		"orgid": "your-organization-id",
-		"emptymessageslimit": 300
+	// Only update MaxTokens if it's not zero
+	if openaiCfg.MaxTokens > 0 {
+		GptCfg.MaxTokens = openaiCfg.MaxTokens
+	} else {
+		// Get recommendation value if setting is invalid
+		GptCfg.MaxTokens = 1000
+		log.Printf("Invalid MaxTokens setting, using default value of: %d.\n", GptCfg.MaxTokens)
 	}
-*/
 
-/// list of env variables
-/*
-	OPENAI_AUTH_TOKEN
-	OPENAI_BASE_URL
-	OPENAI_ORG_ID
-	OPENAI_MTY_MSG_LIM
-*/
+}

@@ -17,6 +17,9 @@
 # Sensitive or high-churn files:
 config.json
 
+# Editor environments:
+.vscode/
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
