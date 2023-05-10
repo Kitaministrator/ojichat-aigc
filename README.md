@@ -4,6 +4,9 @@ Ojichat powered by OpenAI, now ojisan has become knowledgeable!
 ## 何が起こったんですか？
 最先端のLLMサービスを使用して、今のおじさんはいろんな分野の話題ができます！（いったいなんのために…）
 
+## Ojichatとは
+greymdさんが創立した「おじさん構文」を生成するプログラムです。元ページは： https://github.com/greymd/ojichat 
+
 ## 使い方
 1. 本コードをダウンロードして
 2. config-template.json ファイルの名前を config.json にリネームして
@@ -27,7 +30,7 @@ Ojichat powered by OpenAI, now ojisan has become knowledgeable!
         高く設定されているからといって、必ず制限までの長さの回答が生成されるわけではありません。ただし、低く設定すると、モデルの回答が途中で切断される可能性があります。
         本プログラムの prompt + completion は通常600〜700程度です。
         
-- authtoken：これはOpenAIがユーザーを識別するために使用する資格情報であり、OpenAIアカウントを登録した後、https://platform.openai.com/account/api-keys　にアクセスして作成することができます。
+- authtoken：これはOpenAIがユーザーを識別するために使用する資格情報であり、OpenAIアカウントを登録した後、https://platform.openai.com/account/api-keys にアクセスして作成することができます。
         これは個人情報であり、金にかかるものです。他人に漏らさないようにしてください。
         本プログラムは一切の情報の収集機能がついていません。
 - baseurl：ここで設定されたアドレスは、OpenAIのAPIアドレスと置き換えられます、一般的には不要です。
