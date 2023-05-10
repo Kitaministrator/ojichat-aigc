@@ -28,6 +28,7 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 
+inputLoop:
 	for {
 		fmt.Print("なまえ：")
 		input, err := reader.ReadString('\n')
@@ -87,7 +88,8 @@ func main() {
 		for {
 			response, err := stream.Recv()
 			if errors.Is(err, io.EOF) {
-				return
+				fmt.Print("\n")
+				continue inputLoop
 			}
 
 			if err != nil {
