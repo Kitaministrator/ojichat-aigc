@@ -84,11 +84,9 @@ func main() {
 		}
 		defer stream.Close()
 
-		fmt.Printf("Stream response: ")
 		for {
 			response, err := stream.Recv()
 			if errors.Is(err, io.EOF) {
-				fmt.Println("\nStream finished")
 				return
 			}
 
