@@ -22,7 +22,7 @@ func buildOjisanPrompt(name string, theme string) (string, error) {
 	} else {
 		ojisanPrompt.WriteString("。\n")
 	}
-	ojisanPrompt.WriteString("追加資料として、こちらはおじさん構文の例文：")
+	ojisanPrompt.WriteString("追加資料として、こちらはおじさん構文の3つの例です：")
 	ojisanPrompt.WriteString("\n")
 	// モデルが特徴を捉えるために、追加の情報を収集してデータを構築する必要があります、三回分なら十分におじさんの方向に行くはず
 	for i := 0; i < 3; i++ {
@@ -30,12 +30,11 @@ func buildOjisanPrompt(name string, theme string) (string, error) {
 		if err != nil {
 			return "", err
 		}
+		ojisanPrompt.WriteString(fmt.Sprintf("%d. ", i+1))
 		ojisanPrompt.WriteString(message)
-		if i < 3-1 {
-			ojisanPrompt.WriteString("\n")
-		}
+		ojisanPrompt.WriteString("\n")
 	}
-
+	ojisanPrompt.WriteString("出力：")
 	return ojisanPrompt.String(), nil
 }
 
